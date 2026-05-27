@@ -1,0 +1,8 @@
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/bin/Debug/net6.0/TeleportMod.deps.json
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/bin/Debug/net6.0/TeleportMod.dll
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/Debug/net6.0/TeleportMod.csproj.AssemblyReference.cache
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/Debug/net6.0/TeleportMod.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/Debug/net6.0/TeleportMod.AssemblyInfoInputs.cache
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/Debug/net6.0/TeleportMod.AssemblyInfo.cs
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/Debug/net6.0/TeleportMod.csproj.CoreCompileInputs.cache
+/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/Debug/net6.0/TeleportMod.dll
