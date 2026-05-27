@@ -97,7 +97,7 @@ namespace TeleportMod
             {
                 bool hovered = btn.containsPoint(mx, my);
 
-                // Button background — highlight on hover
+                // Button background
                 drawTextureBox(b,
                     btn.bounds.X, btn.bounds.Y,
                     btn.bounds.Width, btn.bounds.Height,
@@ -113,7 +113,7 @@ namespace TeleportMod
                     hovered ? new Color(86, 22, 12) : Game1.textColor);
             }
 
-            // 6. Mouse cursor (always draw last)
+            // 6. Mouse cursor
             drawMouse(b);
         }
 
@@ -145,7 +145,6 @@ namespace TeleportMod
         {
             if (key == Keys.Escape)
                 exitThisMenu();
-            // intentionally NOT calling base — prevents stray key handling
         }
     }
 }

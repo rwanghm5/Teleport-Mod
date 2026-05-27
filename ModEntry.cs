@@ -4,7 +4,6 @@ using StardewValley;
 
 namespace TeleportMod
 {
-    /// <summary>The mod entry point.</summary>
     public class ModEntry : Mod
     {
         public override void Entry(IModHelper helper)
@@ -14,7 +13,7 @@ namespace TeleportMod
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
         {
-            // Require a loaded save, player must be able to move (not in a cutscene/festival)
+            // Require a loaded save, player must be able to move 
             if (!Context.IsWorldReady)      return;
             if (!Context.CanPlayerMove)     return;
             // Don't open on top of another menu
