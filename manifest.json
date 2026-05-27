@@ -1,7 +1,7 @@
 {
   "Name": "Teleport Menu",
   "Author": "rayden",
-  "Version": "%ProjectVersion%",
+  "Version": "1.0.0",
   "Description": "Press L to open a menu and teleport to any location.",
   "UniqueID": "rayden.TeleportMod",
   "EntryDll": "TeleportMod.dll",

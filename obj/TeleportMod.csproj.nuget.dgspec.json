@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/rayden/TeleportMod/TeleportMod.csproj": {}
+    "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj": {}
   },
   "projects": {
-    "/Users/rayden/TeleportMod/TeleportMod.csproj": {
+    "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rayden/TeleportMod/TeleportMod.csproj",
+        "projectUniqueName": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj",
         "projectName": "TeleportMod",
-        "projectPath": "/Users/rayden/TeleportMod/TeleportMod.csproj",
+        "projectPath": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj",
         "packagesPath": "/Users/rayden/.nuget/packages/",
-        "outputPath": "/Users/rayden/TeleportMod/obj/",
+        "outputPath": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/rayden/.nuget/NuGet/NuGet.Config"
