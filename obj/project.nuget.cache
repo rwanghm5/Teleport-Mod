@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MkE8ONyWnss=",
+  "dgSpecHash": "FN+r3fov7BU=",
   "success": true,
-  "projectFilePath": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj",
+  "projectFilePath": "/Users/rayden/Documents/TeleportMod/TeleportMod.csproj",
   "expectedPackageFiles": [
     "/Users/rayden/.nuget/packages/pathoschild.stardew.modbuildconfig/4.4.0/pathoschild.stardew.modbuildconfig.4.4.0.nupkg.sha512"
   ],

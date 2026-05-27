@@ -43,11 +43,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj",
+      "projectUniqueName": "/Users/rayden/Documents/TeleportMod/TeleportMod.csproj",
       "projectName": "TeleportMod",
-      "projectPath": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/TeleportMod.csproj",
+      "projectPath": "/Users/rayden/Documents/TeleportMod/TeleportMod.csproj",
       "packagesPath": "/Users/rayden/.nuget/packages/",
-      "outputPath": "/Users/rayden/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS/Mods/TeleportMod/obj/",
+      "outputPath": "/Users/rayden/Documents/TeleportMod/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rayden/.nuget/NuGet/NuGet.Config"
