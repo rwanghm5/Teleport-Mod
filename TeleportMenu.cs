@@ -35,20 +35,33 @@ namespace TeleportMod
         private const int TitleH    = 56;    // space reserved for the title
         private const int EdgePad   = 24;    // inner horizontal padding
 
+        // Special action button names (used to tell them apart from location buttons)
+        private const string SaveWaypointName     = "Save Waypoint";
+        private const string TeleportWaypointName = "Teleport to Waypoint";
+        _
         private readonly IMonitor _monitor;
+        private readonly ModEntry _mod;
         private readonly List<ClickableComponent> _buttons = new();
 
+            //How many extra rows we reserve at the bottom: always the "Save Waypoint button, plus the "Teleport to Waypoint" button when a waypoint exists.
+        private static int ExtraRowCount(ModEntry mod)
+            => mod.Waypoint.HasValue ? 2 : 1;
+
+        // Total rows = preset locations + extra action rows.
+        private static int RowCount(ModEntry mod)
+            => Locations.Count + ExtraRowCount(mod);
+        
         //Constructor 
-        public TeleportMenu(IMonitor monitor)
+        public TeleportMenu(IMonitor monitor, ModEntry mod)
             : base(
                 x:      (Game1.uiViewport.Width  - (BtnW + EdgePad * 2)) / 2,
-                y:      (Game1.uiViewport.Height - (TitleH + Locations.Count * (BtnH + BtnGap) + EdgePad)) / 2,
+                y:      (Game1.uiViewport.Height - (TitleH + RowCount(mod) * (BtnH + BtnGap) + EdgePad)) / 2,
                 width:   BtnW + EdgePad * 2,
-                height:  TitleH + Locations.Count * (BtnH + BtnGap) + EdgePad
+                height:  TitleH + RowCount(mod) * (BtnH + BtnGap) + EdgePad
             )
         {
             _monitor = monitor;
-
+            _mod = mod;
             for (int i = 0; i < Locations.Count; i++)
             {
                 _buttons.Add(new ClickableComponent(
@@ -96,16 +109,29 @@ namespace TeleportMod
             foreach (var btn in _buttons)
             {
                 bool hovered = btn.containsPoint(mx, my);
+                bool isAction = btn.name == SaveWaypointName || btn.name == TeleportWaypointName;
+
+                // Action buttons get a slightly different tint so they stand out
+                Color baseColor = isAction ? Color.PaleGoldenrod : Color.White;
 
                 // Button background
                 drawTextureBox(b,
                     btn.bounds.X, btn.bounds.Y,
                     btn.bounds.Width, btn.bounds.Height,
-                    hovered ? Color.Wheat : Color.White);
+                    hovered ? Color.Wheat : baseColor);
+
+                // Build label text. For the waypoint teleport button, append the
+                // saved coordinates so the player knows where it goes.
+                string labelText = btn.name;
+                if (btn.name == TeleportWaypointName && _mod.Waypoint.HasValue)
+                {
+                    var wp = _mod.Waypoint.Value;
+                    labelText = $"Waypoint: {wp.Map} ({wp.X},{wp.Y})";
+                }
 
                 // Button label (centred)
-                Vector2 textSize = Game1.smallFont.MeasureString(btn.name);
-                Utility.drawTextWithShadow(b, btn.name, Game1.smallFont,
+                Vector2 textSize = Game1.smallFont.MeasureString(labelText);
+                Utility.drawTextWithShadow(b, labelText, Game1.smallFont,
                     new Vector2(
                         btn.bounds.X + btn.bounds.Width  / 2f - textSize.X / 2f,
                         btn.bounds.Y + btn.bounds.Height / 2f - textSize.Y / 2f
@@ -120,18 +146,47 @@ namespace TeleportMod
         // Input handling
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
-            for (int i = 0; i < _buttons.Count; i++)
+            int row = 0;
+
+            // Preset location buttons
+            for (int i = 0; i < Locations.Count; i++, row++)
             {
-                if (!_buttons[i].containsPoint(x, y)) continue;
-
-                var (label, map, tileX, tileY) = Locations[i];
-                _monitor.Log($"[TeleportMod] Warping to {label} ({map} @ {tileX},{tileY})", LogLevel.Debug);
-
-                Game1.warpFarmer(map, tileX, tileY, false);
-                Game1.playSound("wand");
-                exitThisMenu();
-                return;
+                _buttons.Add(new ClickableComponent(
+                    bounds: new Rectangle(
+                        xPositionOnScreen + EdgePad,
+                        yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
+                        BtnW,
+                        BtnH
+                    ),
+                    name: Locations[i].Label
+                ));
             }
+
+            // "Teleport to Waypoint" button (only if a waypoint is saved)
+            if (_mod.Waypoint.HasValue)
+            {
+                _buttons.Add(new ClickableComponent(
+                    bounds: new Rectangle(
+                        xPositionOnScreen + EdgePad,
+                        yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
+                        BtnW,
+                        BtnH
+                    ),
+                    name: TeleportWaypointName
+                ));
+                row++;
+            }
+
+            // "Save Waypoint" button (always present, last row)
+            _buttons.Add(new ClickableComponent(
+                bounds: new Rectangle(
+                    xPositionOnScreen + EdgePad,
+                    yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
+                    BtnW,
+                    BtnH
+                ),
+                name: SaveWaypointName
+            ));
         }
 
         //Right-click closes the menu

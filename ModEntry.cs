@@ -49,7 +49,7 @@ namespace TeleportMod
             {
                 // Suppress so the key doesn't also trigger anything else
                 this.Helper.Input.Suppress(e.Button);
-                Game1.activeClickableMenu = new TeleportMenu(this.Monitor);
+                Game1.activeClickableMenu = new TeleportMenu(this.Monitor, this);
             }
         }
     }
