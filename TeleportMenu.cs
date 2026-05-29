@@ -38,12 +38,12 @@ namespace TeleportMod
         // Special action button names (used to tell them apart from location buttons)
         private const string SaveWaypointName     = "Save Waypoint";
         private const string TeleportWaypointName = "Teleport to Waypoint";
-        _
+        
         private readonly IMonitor _monitor;
         private readonly ModEntry _mod;
         private readonly List<ClickableComponent> _buttons = new();
 
-            //How many extra rows we reserve at the bottom: always the "Save Waypoint button, plus the "Teleport to Waypoint" button when a waypoint exists.
+        
         private static int ExtraRowCount(ModEntry mod)
             => mod.Waypoint.HasValue ? 2 : 1;
 
@@ -146,47 +146,58 @@ namespace TeleportMod
         // Input handling
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
-            int row = 0;
-
-            // Preset location buttons
-            for (int i = 0; i < Locations.Count; i++, row++)
+            foreach (var btn in _buttons)
             {
-                _buttons.Add(new ClickableComponent(
-                    bounds: new Rectangle(
-                        xPositionOnScreen + EdgePad,
-                        yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
-                        BtnW,
-                        BtnH
-                    ),
-                    name: Locations[i].Label
-                ));
-            }
+                if (!btn.containsPoint(x, y)) continue;
 
-            // "Teleport to Waypoint" button (only if a waypoint is saved)
-            if (_mod.Waypoint.HasValue)
-            {
-                _buttons.Add(new ClickableComponent(
-                    bounds: new Rectangle(
-                        xPositionOnScreen + EdgePad,
-                        yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
-                        BtnW,
-                        BtnH
-                    ),
-                    name: TeleportWaypointName
-                ));
-                row++;
-            }
+                // --- Save Waypoint -------------------------------------------------
+                if (btn.name == SaveWaypointName)
+                {
+                    if (Game1.player?.currentLocation == null)
+                        return;
 
-            // "Save Waypoint" button (always present, last row)
-            _buttons.Add(new ClickableComponent(
-                bounds: new Rectangle(
-                    xPositionOnScreen + EdgePad,
-                    yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
-                    BtnW,
-                    BtnH
-                ),
-                name: SaveWaypointName
-            ));
+                    string map = Game1.player.currentLocation.Name;
+                    int tileX  = Game1.player.TilePoint.X;
+                    int tileY  = Game1.player.TilePoint.Y;
+
+                    _mod.SaveWaypoint(map, tileX, tileY);
+                    _monitor.Log($"[TeleportMod] Saved waypoint at {map} ({tileX},{tileY})", LogLevel.Debug);
+                    Game1.playSound("coin");
+
+                    // Rebuild the menu so the "Teleport to Waypoint" button appears.
+                    Game1.activeClickableMenu = new TeleportMenu(_monitor, _mod);
+                    return;
+                }
+
+                // --- Teleport to Waypoint -----------------------------------------
+                if (btn.name == TeleportWaypointName)
+                {
+                    if (!_mod.Waypoint.HasValue)
+                        return;
+
+                    var wp = _mod.Waypoint.Value;
+                    _monitor.Log($"[TeleportMod] Warping to waypoint ({wp.Map} @ {wp.X},{wp.Y})", LogLevel.Debug);
+
+                    Game1.warpFarmer(wp.Map, wp.X, wp.Y, false);
+                    Game1.playSound("wand");
+                    exitThisMenu();
+                    return;
+                }
+
+                // --- Preset location ----------------------------------------------
+                foreach (var loc in Locations)
+                {
+                    if (loc.Label != btn.name) continue;
+
+                    _monitor.Log($"[TeleportMod] Warping to {loc.Label} ({loc.Map} @ {loc.X},{loc.Y})", LogLevel.Debug);
+                    Game1.warpFarmer(loc.Map, loc.X, loc.Y, false);
+                    Game1.playSound("wand");
+                    exitThisMenu();
+                    return;
+                }
+
+                return;
+            }
         }
 
         //Right-click closes the menu
