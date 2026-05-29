@@ -61,19 +61,49 @@ namespace TeleportMod
             )
         {
             _monitor = monitor;
-            _mod = mod;
-            for (int i = 0; i < Locations.Count; i++)
+            _mod     = mod;
+
+            int row = 0;
+
+            // Preset location buttons
+            for (int i = 0; i < Locations.Count; i++, row++)
             {
                 _buttons.Add(new ClickableComponent(
                     bounds: new Rectangle(
                         xPositionOnScreen + EdgePad,
-                        yPositionOnScreen + TitleH + i * (BtnH + BtnGap),
+                        yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
                         BtnW,
                         BtnH
                     ),
                     name: Locations[i].Label
                 ));
             }
+
+            // "Teleport to Waypoint" button (only if a waypoint is saved)
+            if (_mod.Waypoint.HasValue)
+            {
+                _buttons.Add(new ClickableComponent(
+                    bounds: new Rectangle(
+                        xPositionOnScreen + EdgePad,
+                        yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
+                        BtnW,
+                        BtnH
+                    ),
+                    name: TeleportWaypointName
+                ));
+                row++;
+            }
+
+            // "Save Waypoint" button (always present, last row)
+            _buttons.Add(new ClickableComponent(
+                bounds: new Rectangle(
+                    xPositionOnScreen + EdgePad,
+                    yPositionOnScreen + TitleH + row * (BtnH + BtnGap),
+                    BtnW,
+                    BtnH
+                ),
+                name: SaveWaypointName
+            ));
         }
 
         // Drawing
